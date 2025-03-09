@@ -1,0 +1,12 @@
+images/*.jpg
+images/**/*.webp
+images/**/*.png
+scripts
+tex/.pdflatex
+
+*.aux
+*.log
+*.pdf
+*.txt
+
+cards.tex

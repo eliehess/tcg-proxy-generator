@@ -1,0 +1,39 @@
+\documentclass{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+
+\geometry{
+    paper=letterpaper,
+    left=22mm,
+    right=16mm,
+    top=20mm,
+    bottom=16mm
+}
+
+\pagenumbering{gobble}
+
+\newcommand{\card}[1]{%
+    \IfFileExists{images/#1.jpg}{%
+      \includegraphics[width=57mm, height=79mm,frame]{images/#1.jpg}%
+    }{%
+        \includegraphics[width=57mm, height=79mm,frame]{tex/not-found.jpg}%
+        \llap{%
+            \raisebox{78mm}{%
+                \resizebox{49mm}{\height}{%
+                    \textsc{\detokenize{#1}}%
+                }%
+            }%
+            \hspace{5mm}%
+        }%
+    }%
+}
+
+\begin{document}
+
+    \noindent
+    \input{tex/cards}
+
+\end{document}

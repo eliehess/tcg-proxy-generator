@@ -3,7 +3,8 @@
 function generate_tex() {
 	line_count=0
 
-	while read -r card; do
+	(cat "$1"; echo) | while read -r card; do
+		[[ -z $card ]] && continue
 		# The leading part of the card string, if it's a number, potentially followed by any number of spaces
 		prefix=$(echo "$card" | grep -Eo '^[0-9]+[[:space:]]*')
 		# Just the number part of the above input, or 1 if not matched
@@ -43,11 +44,16 @@ function convert_filetype_to_jpg() {
 	cd ../..
 }
 
-input=${1:-"images"}
-output=${1:-"proxies"}
+if [[ -z $1 ]]; then
+	input="input.txt"
+	output="output"
+else
+	input=$1
+	output=$(basename "${1%.*}")
+fi
 
-if [[ ! -f $input.txt ]]; then
-	echo "Didn't see a file $input.txt"
+if [[ ! -f "$input" ]]; then
+	echo "Didn't see a file $input"
 	exit 0
 fi
 
@@ -57,13 +63,13 @@ for type in "png" "webp"; do
 done
 
 echo "Generating cards.tex..."
-generate_tex < "$input.txt" > "tex/cards.tex"
+generate_tex "$input" > "tex/cards.tex"
 
 echo "Creating pdf..."
 mkdir -p tex/.pdflatex
 pdflatex -interaction batchmode -jobname "$output" -output-directory tex/.pdflatex tex/proxies.tex 1>/dev/null
 
-if [[ -f tex/.pdflatex/$output.pdf ]]; then
+if [[ -f "tex/.pdflatex/$output.pdf" ]]; then
 	mv "tex/.pdflatex/$output.pdf" "$output.pdf"
 	echo "All done!"
 else

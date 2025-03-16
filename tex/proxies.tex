@@ -7,19 +7,19 @@
 
 \geometry{
     paper=letterpaper,
-    left=22mm,
-    right=16mm,
-    top=20mm,
-    bottom=16mm
+    left=14mm,
+    right=10mm,
+    top=8mm,
+    bottom=6mm
 }
 
 \pagenumbering{gobble}
 
 \newcommand{\card}[1]{%
     \IfFileExists{images/#1.jpg}{%
-      \includegraphics[width=57mm, height=79mm,frame]{images/#1.jpg}%
+      \includegraphics[width=62mm, height=87mm,frame]{images/#1.jpg}%
     }{%
-        \includegraphics[width=57mm, height=79mm,frame]{tex/not-found.jpg}%
+        \includegraphics[width=62mm, height=87mm,frame]{tex/not-found.jpg}%
         \llap{%
             \raisebox{78mm}{%
                 \resizebox{49mm}{\height}{%

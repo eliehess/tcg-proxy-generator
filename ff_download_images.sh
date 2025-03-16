@@ -4,12 +4,12 @@
 
 language="eg" #Available languages: English (eg), German (de), Spanish (es), French (fr) and Italian (it).
 
-while read card; do
+while read -r card; do
 	url="https://fftcg.cdn.sewest.net/images/cards/full/${card}_${language}.jpg"
 	outfile="images/${card}_${language}.jpg"
 
 	# skip already existing images
-	[ -f $outfile ] && continue
+	[ -f "$outfile" ] && continue
 
-	wget -O $outfile $url
-done < $1
+	wget -O "$outfile" "$url"
+done < "$1"

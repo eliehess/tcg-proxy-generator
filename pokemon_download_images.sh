@@ -7,7 +7,8 @@ api_key=$(cat ./pokemontcg.io.key)
 # E.g. 4 Professor Oak's New Theory (CL 83)
 (cat "$1"; echo) | while read -r card; do
 	[[ -z $card ]] && continue
-	withoutquantity="${card#* }"
+
+	withoutquantity=$(echo "${card#* }" | tr -d '\r')
 	name="${withoutquantity%% (*}"
 
 	insideparens=$(echo "${card#*\(}" | tr -d ')')
@@ -25,7 +26,7 @@ api_key=$(cat ./pokemontcg.io.key)
 	fi
 
 	count=$(echo "$apiresponse" | jq ".totalCount")
-	[[ $count -ne 1 ]] && echo "WARNING: Expected 1 card with PTCGO code $1 and number $2, but received $count" >> /dev/stderr && continue
+	[[ $count -ne 1 ]] && echo "WARNING: Expected 1 card with PTCGO code $ptcgocode and number $setnumber, but received $count" >> /dev/stderr && continue
 
 	url=$(echo "$apiresponse" | jq ".data[0].images.large" | tr -d '"')
 	[[ -z "$url" ]] && echo "WARNING: Didn't find an image to download for $withoutquantity" >> /dev/stderr && continue

@@ -12,7 +12,7 @@ A unix-like terminal with the following programs:
 
 - imagemagick
 - jq (only for pokemon_download_images.sh)
-- pdflatex
+- pdflatex (package may be named texlive-latex-base)
 
 ## Usage
 

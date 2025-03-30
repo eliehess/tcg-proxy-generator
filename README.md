@@ -4,15 +4,15 @@ A generic proxy generator for TCG cards
 
 Based on [fftcg-proxy-generator](https://github.com/guillegran/fftcg-proxy-generator) which is itself based on [Yu-Gi-Oh! Proxy Generator](https://github.com/FedericoHeichou/ygo-proxy-generator).
 
-- The script `ff_download_images.sh` comes from fftcg-proxy-generator; I factored it out into its own file so it can still be used to download images for the FF TCG
-
 ## Requirements
 
 A unix-like terminal with the following programs:
 
+- curl
 - imagemagick
-- jq (only for pokemon_download_images.sh)
-- pdflatex (package may be named texlive-latex-base)
+- jq
+- pdflatex (package is named texlive-latex-base; you may also need to install texlive-fonts-recommended and texlive-latex-extra)
+- tr
 
 ## Usage
 

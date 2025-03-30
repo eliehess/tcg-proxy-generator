@@ -1,15 +1,20 @@
 #!/bin/bash
-# Usage: ff_download_images.sh <input_file>
-# Cards in the input file should look like "15-139S"
 
-language="eg" #Available languages: English (eg), German (de), Spanish (es), French (fr) and Italian (it).
+language="eg" # Available languages: English (eg), German (de), Spanish (es), French (fr) and Italian (it).
 
-while read -r card; do
-	url="https://fftcg.cdn.sewest.net/images/cards/full/${card}_${language}.jpg"
-	outfile="images/${card}_${language}.jpg"
+# Assumes input is formatted like "<quantity> <name> (<serial number>)"
+# E.g. 3 Yuna (1-214S)
+(cat "$1"; echo) | while read -r card; do
+	[[ -z $card ]] && continue
 
-	# skip already existing images
-	[ -f "$outfile" ] && continue
+	withoutquantity=$(echo "${card#* }" | tr -d '\r')
+	serialnumber=$(echo "${withoutquantity##*\(}" | tr -d ')')
 
-	wget -O "$outfile" "$url"
-done < "$1"
+	url="https://fftcg.cdn.sewest.net/images/cards/full/${serialnumber}_${language}.jpg"
+	outfile="images/$withoutquantity.jpg"
+
+	[[ -f "$outfile" ]] && echo "File $outfile already exists" && continue
+
+	mkdir -p images
+	curl -s --request GET --output "$outfile" --url "$url" && echo "Successfully downloaded $outfile"
+done
